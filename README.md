@@ -1,4 +1,4 @@
-Bitcore-Node-Crown
+bitcore-node-crown
 ==================
 
 # This package is under development. Please don't install.
