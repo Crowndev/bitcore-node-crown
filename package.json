@@ -1,15 +1,19 @@
 {
-  "name": "bitcore-node",
-  "description": "Full node with extended capabilities using Bitcore and Bitcoin Core",
-  "author": "BitPay <dev@bitpay.com>",
-  "version": "3.1.3",
+  "name": "bitcore-node-crown",
+  "description": "Full node with extended capabilities using Bitcore and Crown Core",
+  "author": "Crown Developers <info@crown.tech>",
+  "version": "0.0.0",
   "main": "./index.js",
-  "repository": "git://github.com/bitpay/bitcore-node.git",
-  "homepage": "https://github.com/bitpay/bitcore-node",
+  "repository": "git://github.com/Crowndev/bitcore-node-crown.git",
+  "homepage": "https://github.com/Crowndev/bitcore-node-crown",
   "bugs": {
-    "url": "https://github.com/bitpay/bitcore-node/issues"
+    "url": "https://github.com/Crowndev/bitcore-node-crown/issues"
   },
   "contributors": [
+    {
+      "name": "BitPay",
+      "email": "dev@bitpay.com"
+    },
     {
       "name": "Christopher Jeffrey"
     },
