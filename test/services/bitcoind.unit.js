@@ -407,7 +407,7 @@ describe('Bitcoin Service', function() {
       var config = {
         node: {
           network: bitcore.Networks.testnet,
-          configPath: '/tmp/.bitcore/bitcore-node.json'
+          configPath: '/tmp/.bitcore-crown/bitcore-node.json'
         },
         spawn: {
           datadir: './data',
@@ -418,7 +418,7 @@ describe('Bitcoin Service', function() {
       bitcoind.options.spawn.datadir = './data';
       var node = {};
       bitcoind._loadSpawnConfiguration(node);
-      bitcoind.options.spawn.datadir.should.equal('/tmp/.bitcore/data');
+      bitcoind.options.spawn.datadir.should.equal('/tmp/.bitcore-crown/data');
     });
     it('should throw an exception if txindex isn\'t enabled in the configuration', function() {
       var TestBitcoin = proxyquire('../../lib/services/bitcoind', {
