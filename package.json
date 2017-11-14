@@ -3,6 +3,9 @@
   "description": "Full node with extended capabilities using Bitcore and Crown Core",
   "author": "Crown Developers <info@crown.tech>",
   "version": "0.1.0",
+  "publishConfig": {
+    "tag": "next"
+  },
   "main": "./index.js",
   "repository": "git://github.com/Crowndev/bitcore-node-crown.git",
   "homepage": "https://github.com/Crowndev/bitcore-node-crown",
