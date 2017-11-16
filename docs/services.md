@@ -34,7 +34,7 @@ If, instead, you would like to run a custom node, you can include services by in
 
 ```js
 //Require bitcore
-var bitcore = require('bitcore-node');
+var bitcore = require('bitcore-node-crown');
 
 //Services
 var Bitcoin = bitcore.services.Bitcoin;
