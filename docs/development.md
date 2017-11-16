@@ -102,11 +102,11 @@ cd ~
 mkdir devnode
 cd devnode
 mkdir node_modules
-touch bitcore-node.json
+touch bitcore-node-crown.json
 touch package.json
 ```
 
-Edit `bitcore-node.json` with something similar to:
+Edit `bitcore-node-crown.json` with something similar to:
 ```json
 {
   "network": "livenet",

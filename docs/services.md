@@ -5,7 +5,7 @@ Bitcore Node has a service module system that can start up additional services t
 - HTTP routes
 - Event types to publish and subscribe
 
-The `bitcore-node.json` file describes which services will load for a node:
+The `bitcore-node-crown.json` file describes which services will load for a node:
 
 ```json
 {

@@ -407,7 +407,7 @@ describe('Bitcoin Service', function() {
       var config = {
         node: {
           network: bitcore.Networks.testnet,
-          configPath: '/tmp/.bitcore-crown/bitcore-node.json'
+          configPath: '/tmp/.bitcore-crown/bitcore-node-crown.json'
         },
         spawn: {
           datadir: './data',
