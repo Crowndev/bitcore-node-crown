@@ -34,7 +34,7 @@
     }
   ],
   "bin": {
-    "bitcore-node": "./bin/bitcore-node",
+    "bitcore-node-crown": "./bin/bitcore-node-crown",
     "bitcoind": "./bin/bitcoind"
   },
   "scripts": {
