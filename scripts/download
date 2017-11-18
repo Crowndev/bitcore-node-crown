@@ -5,31 +5,33 @@ set -e
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 platform=`uname -a | awk '{print tolower($1)}'`
 arch=`uname -m`
-version="0.12.1"
-url="https://github.com/bitpay/bitcoin/releases/download"
-tag="v0.12.1-bitcore-4"
+url="https://github.com/Crowndev/crowncoin/releases/download"
+tag="v0.12.3.0"
 
 if [ "${platform}" == "linux" ]; then
     if [ "${arch}" == "x86_64" ]; then
-        tarball_name="bitcoin-${version}-linux64.tar.gz"
+        zip_name="Crown-Linux64.zip"
+        directory_name="648.5-x86_64-unknown-linux-gnu"
     elif [ "${arch}" == "x86_32" ]; then
-        tarball_name="bitcoin-${version}-linux32.tar.gz"
+        zip_name="Crown-Linux32.zip"
+        directory_name="648.4-i686-pc-linux-gnu"
     fi
 elif [ "${platform}" == "darwin" ]; then
-    tarball_name="bitcoin-${version}-osx64.tar.gz"
+    zip_name="Crown-Osx.zip"
+    directory_name="648.6-x86_64-apple-darwin11"
 else
-    echo "Bitcoin binary distribution not available for platform and architecture"
+    echo "Crown binary distribution not available for platform and architecture"
     exit -1
 fi
 
-binary_url="${url}/${tag}/${tarball_name}"
+binary_url="${url}/${tag}/${zip_name}"
 shasums_url="${url}/${tag}/SHA256SUMS.asc"
 
 download_bitcoind() {
 
     cd "${root_dir}/bin"
 
-    echo "Downloading bitcoin: ${binary_url}"
+    echo "Downloading crown: ${binary_url}"
 
     is_curl=true
     if hash curl 2>/dev/null; then
@@ -41,27 +43,27 @@ download_bitcoind() {
 
     if test $? -eq 0; then
         if [ "${is_curl}" = true ]; then
-            curl -L $binary_url > $tarball_name
+            curl -L $binary_url > $zip_name
             curl -L $shasums_url > SHA256SUMS.asc
         else
             wget $binary_url
             wget $shasums_url
         fi
-        if test -e "${tarball_name}"; then
-            echo "Unpacking bitcoin distribution"
-            tar -xvzf $tarball_name
+        if test -e "${zip_name}"; then
+            echo "Unpacking crown distribution"
+            tar -xvzf $zip_name
             if test $? -eq 0; then
-                ln -sf "bitcoin-${version}/bin/bitcoind"
+                ln -sf "${directory_name}/bin/bitcoind"
                 return;
             fi
         fi
     fi
-    echo "Bitcoin binary distribution could not be downloaded"
+    echo "Crown binary distribution could not be downloaded"
     exit -1
 }
 
 verify_download() {
-    echo "Verifying signatures of bitcoin download"
+    echo "Verifying signatures of crown download"
     gpg --verify "${root_dir}/bin/SHA256SUMS.asc"
 
     if hash shasum 2>/dev/null; then
@@ -70,8 +72,8 @@ verify_download() {
         shasum_cmd="sha256sum"
     fi
 
-    download_sha=$(${shasum_cmd} "${root_dir}/bin/${tarball_name}" | awk '{print $1}')
-    expected_sha=$(cat "${root_dir}/bin/SHA256SUMS.asc" | grep "${tarball_name}" | awk '{print $1}')
+    download_sha=$(${shasum_cmd} "${root_dir}/bin/${zip_name}" | awk '{print $1}')
+    expected_sha=$(cat "${root_dir}/bin/SHA256SUMS.asc" | grep "${zip_name}" | awk '{print $1}')
     echo "Checksum (download): ${download_sha}"
     echo "Checksum (verified): ${expected_sha}"
     if [ "${download_sha}" != "${expected_sha}" ]; then
