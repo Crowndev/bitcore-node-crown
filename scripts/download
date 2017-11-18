@@ -51,7 +51,7 @@ download_bitcoind() {
         fi
         if test -e "${zip_name}"; then
             echo "Unpacking crown distribution"
-            unzip $zip_name
+            unzip -o $zip_name
             if test $? -eq 0; then
                 ln -sf "${directory_name}/bin/bitcoind"
                 return;
