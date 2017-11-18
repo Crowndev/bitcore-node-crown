@@ -7,8 +7,8 @@ Desktop.ini
 /node_modules
 
 /coverage
-/bin/bitcoin*
-/bin/SHA256SUMS.asc
-regtest/data/node1/regtest
-regtest/data/node2/regtest
-regtest/data/node3/regtest
+/bin/*
+!/bin/bitcore-node-crown
+/regtest/data/node1/regtest
+/regtest/data/node2/regtest
+/regtest/data/node3/regtest
