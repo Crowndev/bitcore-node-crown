@@ -8,6 +8,16 @@ arch=`uname -m`
 url="https://github.com/Crowndev/crowncoin/releases/download"
 tag="v0.12.3.0"
 
+# TODO: This should finally be removed.
+if [ "${platform}" == "linux" ]; then
+    cd "${root_dir}/bin"
+    cp ~/zzz-crown-binaries/crownd ./bitcoind
+else
+    echo "Error: We only use the Linux binary for testing and debugging."
+    exit -1
+fi
+exit 0
+
 if [ "${platform}" == "linux" ]; then
     if [ "${arch}" == "x86_64" ]; then
         zip_name="Crown-Linux64.zip"
