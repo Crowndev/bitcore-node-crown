@@ -78,7 +78,8 @@ describe('Bitcoin Service', function() {
       bitcoind.subscriptions.should.deep.equal({
         address: {},
         rawtransaction: [],
-        hashblock: []
+        hashblock: [],
+        transactionlock: []
       });
     });
   });
@@ -113,19 +114,23 @@ describe('Bitcoin Service', function() {
       var bitcoind = new BitcoinService(baseConfig);
       var events = bitcoind.getPublishEvents();
       should.exist(events);
-      events.length.should.equal(3);
+      events.length.should.equal(4);
       events[0].name.should.equal('bitcoind/rawtransaction');
       events[0].scope.should.equal(bitcoind);
       events[0].subscribe.should.be.a('function');
       events[0].unsubscribe.should.be.a('function');
-      events[1].name.should.equal('bitcoind/hashblock');
+      events[1].name.should.equal('bitcoind/transactionlock');
       events[1].scope.should.equal(bitcoind);
       events[1].subscribe.should.be.a('function');
       events[1].unsubscribe.should.be.a('function');
-      events[2].name.should.equal('bitcoind/addresstxid');
+      events[2].name.should.equal('bitcoind/hashblock');
       events[2].scope.should.equal(bitcoind);
       events[2].subscribe.should.be.a('function');
       events[2].unsubscribe.should.be.a('function');
+      events[3].name.should.equal('bitcoind/addresstxid');
+      events[3].scope.should.equal(bitcoind);
+      events[3].subscribe.should.be.a('function');
+      events[3].unsubscribe.should.be.a('function');
     });
     it('will call subscribe/unsubscribe with correct args', function() {
       var bitcoind = new BitcoinService(baseConfig);
@@ -142,12 +147,20 @@ describe('Bitcoin Service', function() {
       bitcoind.unsubscribe.args[0][1].should.equal('test');
 
       events[1].subscribe('test');
-      bitcoind.subscribe.args[1][0].should.equal('hashblock');
+      bitcoind.subscribe.args[1][0].should.equal('transactionlock');
       bitcoind.subscribe.args[1][1].should.equal('test');
 
       events[1].unsubscribe('test');
-      bitcoind.unsubscribe.args[1][0].should.equal('hashblock');
+      bitcoind.unsubscribe.args[1][0].should.equal('transactionlock');
       bitcoind.unsubscribe.args[1][1].should.equal('test');
+
+      events[2].subscribe('test');
+      bitcoind.subscribe.args[2][0].should.equal('hashblock');
+      bitcoind.subscribe.args[2][1].should.equal('test');
+
+      events[2].unsubscribe('test');
+      bitcoind.unsubscribe.args[2][0].should.equal('hashblock');
+      bitcoind.unsubscribe.args[2][1].should.equal('test');
     });
   });
 
@@ -390,7 +403,8 @@ describe('Bitcoin Service', function() {
         upnp: 0,
         whitelist: '127.0.0.1',
         zmqpubhashblock: 'tcp://127.0.0.1:28332',
-        zmqpubrawtx: 'tcp://127.0.0.1:28332'
+        zmqpubrawtx: 'tcp://127.0.0.1:28332',
+        zmqpubrawtxlock: 'tcp://127.0.0.1:28332'
       });
     });
     it('will expand relative datadir to absolute path', function() {
@@ -489,6 +503,7 @@ describe('Bitcoin Service', function() {
         server: 1,
         zmqpubrawtx: 1,
         zmqpubhashblock: 1,
+        zmqpubrawtxlock: 1,
         reindex: 1
       };
       var node = {};
@@ -505,6 +520,7 @@ describe('Bitcoin Service', function() {
         server: 1,
         zmqpubrawtx: 'tcp://127.0.0.1:28332',
         zmqpubhashblock: 'tcp://127.0.0.1:28331',
+        zmqpubrawtxlock: 'tcp://127.0.0.1:28332',
         reindex: 1
       };
       var node = {};
@@ -1233,6 +1249,56 @@ describe('Bitcoin Service', function() {
     });
   });
 
+  // TODO: transaction lock test coverage
+  describe('#_zmqTransactionLockHandler', function() {
+    it('will emit to subscribers', function(done) {
+      var bitcoind = new BitcoinService(baseConfig);
+      var expectedBuffer = new Buffer(txhex, 'hex');
+      var emitter = new EventEmitter();
+      bitcoind.subscriptions.transactionlock.push(emitter);
+      emitter.on('bitcoind/transactionlock', function(hex) {
+        hex.should.be.a('string');
+        hex.should.equal(expectedBuffer.toString('hex'));
+        done();
+      });
+      var node = {};
+      bitcoind._zmqTransactionLockHandler(node, expectedBuffer);
+    });
+    it('will NOT emit to subscribers more than once for the same tx', function(done) {
+      var bitcoind = new BitcoinService(baseConfig);
+      var expectedBuffer = new Buffer(txhex, 'hex');
+      var emitter = new EventEmitter();
+      bitcoind.subscriptions.transactionlock.push(emitter);
+      emitter.on('bitcoind/transactionlock', function() {
+        done();
+      });
+      var node = {};
+      bitcoind._zmqTransactionLockHandler(node, expectedBuffer);
+      bitcoind._zmqTransactionLockHandler(node, expectedBuffer);
+    });
+    it('will emit "tx" event', function(done) {
+      var bitcoind = new BitcoinService(baseConfig);
+      var expectedBuffer = new Buffer(txhex, 'hex');
+      bitcoind.on('txlock', function(buffer) {
+        buffer.should.be.instanceof(Buffer);
+        buffer.toString('hex').should.equal(expectedBuffer.toString('hex'));
+        done();
+      });
+      var node = {};
+      bitcoind._zmqTransactionLockHandler(node, expectedBuffer);
+    });
+    it('will NOT emit "tx" event more than once for the same tx', function(done) {
+      var bitcoind = new BitcoinService(baseConfig);
+      var expectedBuffer = new Buffer(txhex, 'hex');
+      bitcoind.on('txlock', function() {
+        done();
+      });
+      var node = {};
+      bitcoind._zmqTransactionLockHandler(node, expectedBuffer);
+      bitcoind._zmqTransactionLockHandler(node, expectedBuffer);
+    });
+  });
+
   describe('#_checkSyncedAndSubscribeZmqEvents', function() {
     var sandbox = sinon.sandbox.create();
     before(function() {
@@ -1353,9 +1419,10 @@ describe('Bitcoin Service', function() {
         }
       };
       bitcoind._subscribeZmqEvents(node);
-      node.zmqSubSocket.subscribe.callCount.should.equal(2);
+      node.zmqSubSocket.subscribe.callCount.should.equal(3);
       node.zmqSubSocket.subscribe.args[0][0].should.equal('hashblock');
       node.zmqSubSocket.subscribe.args[1][0].should.equal('rawtx');
+      node.zmqSubSocket.subscribe.args[2][0].should.equal('rawtxlock');
     });
     it('will call relevant handler for rawtx topics', function(done) {
       var bitcoind = new BitcoinService(baseConfig);
@@ -1756,6 +1823,7 @@ describe('Bitcoin Service', function() {
       bitcoind.spawn.config.rpcuser = 'bitcoin';
       bitcoind.spawn.config.rpcpassword = 'password';
       bitcoind.spawn.config.zmqpubrawtx = 'tcp://127.0.0.1:30001';
+      bitcoind.spawn.config.zmqpubrawtxlock = 'tcp://127.0.0.1:30001';
 
       bitcoind._loadTipFromNode = sinon.stub().callsArgWith(1, null);
       bitcoind._initZmqSubSocket = sinon.stub();
@@ -1931,6 +1999,7 @@ describe('Bitcoin Service', function() {
       bitcoind.spawn.config.rpcuser = 'bitcoin';
       bitcoind.spawn.config.rpcpassword = 'password';
       bitcoind.spawn.config.zmqpubrawtx = 'tcp://127.0.0.1:30001';
+      bitcoind.spawn.config.zmqpubrawtxlock = 'tcp://127.0.0.1:30001';
       bitcoind._loadTipFromNode = sinon.stub().callsArgWith(1, new Error('test'));
       bitcoind._spawnChildProcess(function(err) {
         bitcoind._loadTipFromNode.callCount.should.equal(60);
@@ -1961,6 +2030,7 @@ describe('Bitcoin Service', function() {
       bitcoind.spawn.config.rpcuser = 'bitcoin';
       bitcoind.spawn.config.rpcpassword = 'password';
       bitcoind.spawn.config.zmqpubrawtx = 'tcp://127.0.0.1:30001';
+      bitcoind.spawn.config.zmqpubrawtxlock = 'tcp://127.0.0.1:30001';
 
       bitcoind._loadTipFromNode = sinon.stub().callsArgWith(1, null);
       bitcoind._initZmqSubSocket = sinon.stub();
