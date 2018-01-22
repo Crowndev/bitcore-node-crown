@@ -18,4 +18,4 @@ It means the fee is 1000000 cSat.
 
 Bitcoin script addresses in the test has been replaced with Crown script addresses.
 
-The "download" script should finally download Crown Core binaries from the web. But for now it just copies a file `~/zzz-crown-binaries/crownd` to `bin` directory with a new name `bitcoind`. So make sure there's a file `~/zzz-crown-binaries/crownd` before `npm install`.
+When typing `npm install`, the "scripts/download" script will download `crownd` from the web (by default), or copy from local file `~/zzz-crown-binaries/crownd` (if you uncomment a line in the script).
