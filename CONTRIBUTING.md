@@ -1,7 +1,7 @@
 What's Different
 ================
 
-This repo, bitcore-node-crown, is based on the `97683d2ff1dd8e84bf9f7f338052cc0ed258961f` commit of the official bitcore-node. The modified area is similar to [this link](https://github.com/bitpay/bitcore-node/compare/97683d2ff1dd8e84bf9f7f338052cc0ed258961f...dashpay:54af7029da13390f78cd393399c0c0a636808a9f). We have replaced some parameters by looking up the Crown Core.
+This repo, bitcore-node-crown, is based on the `97683d2ff1dd8e84bf9f7f338052cc0ed258961f` commit of the official bitcore-node. The modified area is similar to [this link](https://github.com/bitpay/bitcore-node/compare/97683d2ff1dd8e84bf9f7f338052cc0ed258961f...dashpay:54af7029da13390f78cd393399c0c0a636808a9f). We have replaced some parameters by looking up the Crown Core. Here's the summary:
 
 The RPC ports for livenet and testnet can be found in Core's `src/chainparamsbase.cpp`.
 
