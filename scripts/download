@@ -2,7 +2,7 @@
 
 set -e
 
-tag="bitcore-bin-002"
+tag="bitcore-bin-003"
 #tag="" # uncomment this line if you want to copy file from ~/zzz-crown-binaries rather than download
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
