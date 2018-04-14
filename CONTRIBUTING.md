@@ -20,4 +20,4 @@ Bitcoin script addresses in the test has been replaced with Crown script address
 
 When typing `npm install`, the "scripts/download" script will download `crownd` from the web (by default), or copy from local file `~/zzz-crown-binaries/crownd` (if you uncomment a line in the script).
 
-If the Crown Core is modified, then in "scripts/download" we should modify `bitcore-bin-<xxx>` where `<xxx>` is a 3-digit number that reflects the tag of the new Crown Core binary.
+If the Crown Core is modified, then in "scripts/download" we should modify `bitcore-bin-<xxx>` where `<xxx>` is a 3-digit number that reflects the tag of the new Crown Core binary, and release a new version of bitcore-node-crown.
