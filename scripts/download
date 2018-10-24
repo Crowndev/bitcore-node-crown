@@ -2,13 +2,12 @@
 
 set -e
 
-tag="bitcore-bin-005"
-#tag="" # uncomment this line if you want to copy file from ~/zzz-crown-binaries rather than download
+binary_url="https://gitlab.crown.tech/crown/crown-core/uploads/a20bff1013877f03fc5a89ce0fc23c54/crownd.tar.gz"
+#binary_url="" # uncomment this line if you want to copy file from ~/zzz-crown-binaries rather than download
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 platform=`uname -a | awk '{print tolower($1)}'`
 arch=`uname -m`
-url="https://github.com/zhanzhenzhen/crowncoin/releases/download"
 
 if [ "${platform}" == "linux" ]; then
     if [ "${arch}" == "x86_32" ]; then
@@ -25,12 +24,10 @@ fi
 
 cd "${root_dir}/bin"
 
-if [ "${tag}" == "" ]; then
+if [ "${binary_url}" == "" ]; then
     cp ~/zzz-crown-binaries/crownd ./bitcoind
     exit 0
 fi
-
-binary_url="${url}/${tag}/crownd.tar.gz"
 
 echo "Downloading crown: ${binary_url}"
 curl -L "${binary_url}" > crownd.tar.gz
