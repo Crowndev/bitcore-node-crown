@@ -132,14 +132,14 @@ describe('Utils', function() {
 
   describe('#parseParamsWithJSON', function() {
     it('will parse object', function() {
-      var paramsArg = ['CRJE64kYcdufuUH9T9rgC8bDw4voT5qfym', '{"start": 100, "end": 1}'];
+      var paramsArg = ['CRMVN4BC7bEDReXzfSSknXRGG6mYfJa6iviq', '{"start": 100, "end": 1}'];
       var params = utils.parseParamsWithJSON(paramsArg);
-      params.should.deep.equal(['CRJE64kYcdufuUH9T9rgC8bDw4voT5qfym', {start: 100, end: 1}]);
+      params.should.deep.equal(['CRMVN4BC7bEDReXzfSSknXRGG6mYfJa6iviq', {start: 100, end: 1}]);
     });
     it('will parse array', function() {
-      var paramsArg = ['CRJE64kYcdufuUH9T9rgC8bDw4voT5qfym', '[0, 1]'];
+      var paramsArg = ['CRMVN4BC7bEDReXzfSSknXRGG6mYfJa6iviq', '[0, 1]'];
       var params = utils.parseParamsWithJSON(paramsArg);
-      params.should.deep.equal(['CRJE64kYcdufuUH9T9rgC8bDw4voT5qfym', [0, 1]]);
+      params.should.deep.equal(['CRMVN4BC7bEDReXzfSSknXRGG6mYfJa6iviq', [0, 1]]);
     });
     it('will parse numbers', function() {
       var paramsArg = ['3', 0, 'b', '0', 0x12, '0.0001'];

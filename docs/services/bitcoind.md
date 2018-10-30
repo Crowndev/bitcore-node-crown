@@ -182,7 +182,7 @@ node.services.bitcoind.sendTransaction(transaction.serialize(), function(err, ha
 One of the most common uses will be to retrieve unspent outputs necessary to create a transaction, here is how to get the unspent outputs for an address:
 
 ```js
-var address = 'mgY65WSfEmsyYaYPQaXhmXMeBhwp4EcsQW';
+var address = 'tCRWE1Wu4gnbCnJQSH9CQDqBziu9hAVRC2xk4';
 node.services.bitcoind.getAddressUnspentOutputs(address, options, function(err, unspentOutputs) {
   // see below
 });
@@ -193,7 +193,7 @@ The `unspentOutputs` will have the format:
 ```js
 [
   {
-    address: 'mgY65WSfEmsyYaYPQaXhmXMeBhwp4EcsQW',
+    address: 'tCRWE1Wu4gnbCnJQSH9CQDqBziu9hAVRC2xk4',
     txid: '9d956c5d324a1c2b12133f3242deff264a9b9f61be701311373998681b8c1769',
     outputIndex: 1,
     height: 150,
@@ -207,7 +207,7 @@ The `unspentOutputs` will have the format:
 **View Balances**
 
 ```js
-var address = 'mgY65WSfEmsyYaYPQaXhmXMeBhwp4EcsQW';
+var address = 'tCRWE1Wu4gnbCnJQSH9CQDqBziu9hAVRC2xk4';
 node.services.bitcoind.getAddressBalance(address, options, function(err, balance) {
   // balance will be in satoshis with "received" and "balance"
 });
@@ -222,7 +222,7 @@ If "queryMempool" is set as true (it is true by default), it will show unconfirm
 If "queryMempoolOnly" is set as true (it is false by default), it will show *only* unconfirmed transactions from mempool.
 
 ```js
-var addresses = ['mgY65WSfEmsyYaYPQaXhmXMeBhwp4EcsQW'];
+var addresses = ['tCRWE1Wu4gnbCnJQSH9CQDqBziu9hAVRC2xk4'];
 var options = {
   start: 345000,
   end: 344000,
@@ -241,7 +241,7 @@ The history format will be:
   items: [
     {
       addresses: {
-        'mgY65WSfEmsyYaYPQaXhmXMeBhwp4EcsQW': {
+        'tCRWE1Wu4gnbCnJQSH9CQDqBziu9hAVRC2xk4': {
           inputIndexes: [],
           outputIndexes: [0]
         }
@@ -256,7 +256,7 @@ The history format will be:
 **View Address Summary**
 
 ```js
-var address = 'mgY65WSfEmsyYaYPQaXhmXMeBhwp4EcsQW';
+var address = 'tCRWE1Wu4gnbCnJQSH9CQDqBziu9hAVRC2xk4';
 var options = {
   noTxList: false
 };
@@ -316,7 +316,7 @@ For details on instantiating a bus for a node, see the [Bus Documentation](../bu
 ```js
 bus.subscribe('bitcoind/rawtransaction');
 bus.subscribe('bitcoind/hashblock');
-bus.subscribe('bitcoind/addresstxid', ['13FMwCYz3hUhwPcaWuD2M1U2KzfTtvLM89']);
+bus.subscribe('bitcoind/addresstxid', ['CRWEDMFkpSAJAVTayCjUnopQkEdhH8e6TRrP']);
 
 bus.on('bitcoind/rawtransaction', function(transactionHex) {
   //...
