@@ -2,7 +2,7 @@
 
 set -e
 
-binary_url="https://gitlab.crown.tech/crown/crown-core/uploads/a20bff1013877f03fc5a89ce0fc23c54/crownd.tar.gz"
+binary_url="https://gitlab.crown.tech/crown/crown-core/uploads/2a23ec71a71f45078b580ca47447248b/crownd.tar.gz"
 #binary_url="" # uncomment this line if you want to copy file from ~/zzz-crown-binaries rather than download
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."

@@ -2,7 +2,7 @@
   "name": "bitcore-node-crown",
   "description": "Full node with extended capabilities using Bitcore and Crown Core",
   "author": "Crown Developers <info@crown.tech>",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publishConfig": {
     "tag": "next"
   },
@@ -52,8 +52,8 @@
   ],
   "dependencies": {
     "async": "^1.3.0",
-    "bitcoind-rpc": "^0.6.0",
-    "bitcore-lib-crown": "0.4.x",
+    "crownd-rpc": "^0.1.0",
+    "bitcore-lib-crown": "^0.4.3",
     "body-parser": "^1.13.3",
     "colors": "^1.1.2",
     "commander": "^2.8.1",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "benchmark": "1.0.0",
-    "bitcore-p2p-crown": "0.3.x",
+    "bitcore-p2p-crown": "^0.3.2",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
