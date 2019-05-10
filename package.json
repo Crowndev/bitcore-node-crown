@@ -53,7 +53,7 @@
   "dependencies": {
     "async": "^1.3.0",
     "crownd-rpc": "^0.1.0",
-    "bitcore-lib-crown": "^0.4.3",
+    "bitcore-lib-crown": "^0.5.0",
     "body-parser": "^1.13.3",
     "colors": "^1.1.2",
     "commander": "^2.8.1",
