@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "benchmark": "1.0.0",
-    "bitcore-p2p-crown": "^0.3.2",
+    "bitcore-p2p-crown": "^0.4.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
