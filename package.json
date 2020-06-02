@@ -2,7 +2,7 @@
   "name": "bitcore-node-crown",
   "description": "Full node with extended capabilities using Bitcore and Crown Core",
   "author": "Crown Developers <info@crown.tech>",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publishConfig": {
     "tag": "next"
   },
@@ -52,7 +52,7 @@
   ],
   "dependencies": {
     "async": "^1.3.0",
-    "crownd-rpc": "^0.1.0",
+    "crownd-rpc": "^0.2.0",
     "bitcore-lib-crown": "^0.5.0",
     "body-parser": "^1.13.3",
     "colors": "^1.1.2",
