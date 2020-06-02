@@ -5059,6 +5059,41 @@ describe('Bitcoin Service', function() {
     });
   });
 
+  describe('#nftTotalSupply', function() {
+    it('will give rpc error', function(done) {
+      var bitcoind = new BitcoinService(baseConfig);
+      var nfToken = sinon.stub().callsArgWith(2, {message: 'error', code: -1});
+      bitcoind.nodes.push({
+        client: {
+          nfToken: nfToken
+        }
+      });
+      bitcoind.nftTotalSupply('test', function(err) {
+        should.exist(err);
+        err.should.be.an.instanceof(errors.RPCError);
+        done();
+      });
+    });
+    it('will call client nftTotalSupply and give result', function(done) {
+      var bitcoind = new BitcoinService(baseConfig);
+      var nfToken = sinon.stub().callsArgWith(2, null, {
+        result: -1
+      });
+      bitcoind.nodes.push({
+        client: {
+          nfToken: nfToken
+        }
+      });
+      bitcoind.nftTotalSupply('test', function(err, totalSupply) {
+        if (err) {
+          return done(err);
+        }
+        totalSupply.should.equal(-1);
+        done();
+      });
+    });
+  });
+
   describe('#stop', function() {
     it('will callback if spawn is not set', function(done) {
       var bitcoind = new BitcoinService(baseConfig);
