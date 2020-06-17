@@ -2,7 +2,7 @@
   "name": "bitcore-node-crown",
   "description": "Full node with extended capabilities using Bitcore and Crown Core",
   "author": "Crown Developers <info@crown.tech>",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "publishConfig": {
     "tag": "next"
   },
